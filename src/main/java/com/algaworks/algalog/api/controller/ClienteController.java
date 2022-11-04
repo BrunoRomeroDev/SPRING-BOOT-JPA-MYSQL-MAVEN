@@ -2,6 +2,8 @@ package com.algaworks.algalog.api.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.algaworks.algalog.domain.model.Cliente;
 import com.algaworks.algalog.domain.repository.ClienteRepository;
+import com.algaworks.algalog.domain.services.CatalogoClienteService;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
 public class ClienteController {
-	
+	@Autowired
+	private CatalogoClienteService catalogoclienteservice;
 	@Autowired
 	private ClienteRepository clienteRepository;
 	
@@ -62,16 +66,19 @@ public class ClienteController {
 	
 	@PostMapping("/clientes")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Cliente adicionar(@RequestBody Cliente cliente) {
-		return clienteRepository.save(cliente);
+	public Cliente adicionar(@Valid @RequestBody Cliente cliente) {
+		//return clienteRepository.save(cliente);
+		
+		return catalogoclienteservice.salvar(cliente);		
 	}
 	@PutMapping("/clientes/atualizar/{clienteid}")
-	public ResponseEntity<Cliente> atualizar(@PathVariable Long clienteid, @RequestBody Cliente cliente){
+	public ResponseEntity<Cliente> atualizar(@PathVariable Long clienteid, @Valid @RequestBody Cliente cliente){
 		if(!clienteRepository.existsById(clienteid)) {
 			return ResponseEntity.notFound().build(); 
 		}
 		cliente.setId(clienteid);
-		cliente = clienteRepository.save(cliente);
+		//cliente = clienteRepository.save(cliente);
+		cliente = catalogoclienteservice.salvar(cliente);
 		
 		return ResponseEntity.ok(cliente);
 		
@@ -82,7 +89,8 @@ public class ClienteController {
 			
 		return ResponseEntity.notFound().build();
 		}
-		clienteRepository.deleteById(clienteId);
+		//clienteRepository.deleteById(clienteId);
+		catalogoclienteservice.excluir(clienteId);
 		return ResponseEntity.noContent().build();
 	}
 }
