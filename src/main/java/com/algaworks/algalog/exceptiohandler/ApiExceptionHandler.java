@@ -1,6 +1,6 @@
 package com.algaworks.algalog.exceptiohandler;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +41,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 		
 		Problema problema = new Problema();
 		problema.setStatus(status.value());
-		problema.setDatahora(LocalDateTime.now());
+		problema.setDatahora(OffsetDateTime.now());
 		problema.setTitulo("Um ou mais campos náo estao válidos");
 		problema.setCampos(campos);
 		return handleExceptionInternal(ex,problema,headers,status,request);
@@ -54,7 +54,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 		
 		Problema problema = new Problema();
 		problema.setStatus(status.value());
-		problema.setDatahora(LocalDateTime.now());
+		problema.setDatahora(OffsetDateTime.now());
 		problema.setTitulo(ex.getMessage());
 		
 		return handleExceptionInternal(ex, ex, new HttpHeaders(), status, request);
