@@ -1,6 +1,5 @@
 package com.algaworks.algalog.domain.services;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;

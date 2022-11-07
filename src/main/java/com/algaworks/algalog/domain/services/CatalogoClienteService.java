@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.algaworks.algalog.domain.exceptio.NegocioException;
 import com.algaworks.algalog.domain.model.Cliente;
 import com.algaworks.algalog.domain.repository.ClienteRepository;
-import com.algaworks.algalog.domain.repository.EntregaRepository;
 
 import lombok.AllArgsConstructor;
 
